@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken') //JSON Web Token defines a self-contained wa
 
 require('dotenv').config(); //to be able to use "SUPERSECRETPASSWORD"
 
-const saltRounds = 10;
+const SALT_I = 10;
 
 
 
@@ -34,7 +34,7 @@ const userSchema = mongoose.Schema({
   // === NOT 'REQUIRED' FIELDS ===
   cart:{
     type: Array,
-    default: [], //if there's nothing there, set to default
+    default: [], //if not present, set to default
   },
   history:{
     type: Array,
@@ -49,43 +49,42 @@ const userSchema = mongoose.Schema({
   }
 });
 
-const User = mongoose.model('User', userSchema) //creat a model from with name 'User' using userSchema
-
 
 //before we save() to db, we want to hash the password str (w/ bcrypt), using pre('[action]')
 
 userSchema.pre('save', function(next){   //next for when you're finished and want to complete the rest of the process
-  let user = this; //ES5 requires we create an alias for 'this'
+  var user = this; //ES5 requires we create an alias for 'this'
+  console.log("PRE-THIS", this)
 
-  bcrypt.genSalt(saltRounds, (err, salt)=>{
-    if (err) return next(err);
+  if (user.isModified('password')){ //only hash when we are saving a new user or modifying password (we do not want to re-hash password for say ex, name change)
 
-    // *** if user wants to change name for ex, we do not want to re-hash password
-    //     (we only want it when they want to change password)
-    if(user.isModified('password')){  // if changing password ***
+    bcrypt.genSalt(SALT_I, (err, salt)=>{
+      if (err) return next(err);
+
       bcrypt.hash(user.password, salt, null, (err, hash)=>{
         if (err) return next(err);
-
         user.password = hash;
         next()
       })
-    }else{ //move forward and not hash password again
-      next();
-    }
-  })
+    })
+  }else{ //move forward and not hash password again
+    next()
+  }
 })
 
 //create a method in the Schema
-userSchema.methods.comparePassword = (candidatePassword, cb)=>{ //cb so when we are done w/ the fxn, we can trigger it
+userSchema.methods.comparePassword = function(candidatePassword, cb){ //cb so when we are done w/ the fxn, we can trigger it
+
   //since we are within the same fxn, 'this.password' will be the user.password
   bcrypt.compare(candidatePassword, this.password, (err, isMatch)=>{
+    console.log('inside this.password: ', this.password)
     if (err) return cb(err);
 
     cb(null, isMatch) //the returned 'isMatch' is a boolean
   })
 }
 
-userSchema.methods.generateToken = (cb)=>{
+userSchema.methods.generateToken = function(cb){
   var user = this;
 
   //based on:  user.id + password (of the environment, that only server knows)
@@ -97,9 +96,8 @@ userSchema.methods.generateToken = (cb)=>{
 
     cb(null, user) //if everything is good, new user should have the same .password as .token
   })
-
-
 }
 
+const User = mongoose.model('User', userSchema) //creat a model from with name 'User' using userSchema
 
 module.exports = { User }
