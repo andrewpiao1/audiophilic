@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
 
-const userSchema = mongoose.schema({
+const userSchema = mongoose.Schema({
+
+  // === REQUIRED FIELDS ===
   email:{
     type: String,
     required: true, //value is required every time
@@ -23,7 +25,7 @@ const userSchema = mongoose.schema({
     maxlength: 100,
   },
 
-  //below: not required
+  // === NOT 'REQUIRED' ===
   cart:{
     type: Array,
     default: [], //if there's nothing there, set to default
@@ -39,12 +41,8 @@ const userSchema = mongoose.schema({
   token:{
     type: String
   }
-
-
-
 });
 
-
-const User = mongoose.model(userSchema('User', )) //creat a model from with name 'User' using userSchema
+const User = mongoose.model('User', userSchema) //creat a model from with name 'User' using userSchema
 
 module.exports = { User }
