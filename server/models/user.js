@@ -1,4 +1,6 @@
 const mongoose = require('mongoose');
+const bcrypt = require('bcrypt-nodejs');
+const SALT_I = 10;
 
 const userSchema = mongoose.Schema({
 
@@ -42,6 +44,33 @@ const userSchema = mongoose.Schema({
     type: String
   }
 });
+
+//before we save() to db, we want to hash the password str (w/ bcrypt), using pre('[action]')
+
+userSchema.pre('save', function(next){   //next for when you're finished and want to complete the rest of the process
+  let user = this; //ES5 requires we create an alias for 'this'
+
+  bcrypt.genSalt(SALT_I, (err, salt)=>{
+    if (err) return next(err);
+
+    if(user.isModified('password')){  // if changing password ***
+      bcrypt.hash(user.password, salt, null, (err, hash)=>{
+        if (err) return next(err);
+
+        user.password = hash;
+        next()
+      })
+    }else{ //move forward and not hash password again
+      next();
+    }
+
+
+  })
+})
+
+//***  if user wants to change name for ex, we do not want to re-hash password (we only want it when they want to change password)
+
+
 
 const User = mongoose.model('User', userSchema) //creat a model from with name 'User' using userSchema
 

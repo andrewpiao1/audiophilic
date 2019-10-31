@@ -10,7 +10,7 @@ const mongoose = require('mongoose')
 require('dotenv').config() //allows us to use the .env information here on server
 
 mongoose.Promise = global.Promise;
-mongoose.set('useCreateIndex', true)
+mongoose.set('useCreateIndex', true) //so we can use 'unique' schema property
 mongoose.connect(process.env.DATABASE, { useNewUrlParser: true, useUnifiedTopology: true })
 
 //register middleware
