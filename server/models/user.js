@@ -6,8 +6,6 @@ require('dotenv').config(); //to be able to use "SUPERSECRETPASSWORD"
 
 const SALT_I = 10;
 
-
-
 const userSchema = mongoose.Schema({
   // === REQUIRED FIELDS ===
   email:{
@@ -72,7 +70,7 @@ userSchema.pre('save', function(next){   //next for when you're finished and wan
   }
 })
 
-//create a method in the Schema
+// === SCHEMA METHODS ===
 userSchema.methods.comparePassword = function(candidatePassword, cb){ //cb so when we are done w/ the fxn, we can trigger it
 
   //since we are within the same fxn, 'this.password' will be the user.password
@@ -80,7 +78,7 @@ userSchema.methods.comparePassword = function(candidatePassword, cb){ //cb so wh
     console.log('inside this.password: ', this.password)
     if (err) return cb(err);
 
-    cb(null, isMatch) //the returned 'isMatch' is a boolean
+    cb(null, isMatch) //returned 'isMatch' is a boolean
   })
 }
 
@@ -90,12 +88,27 @@ userSchema.methods.generateToken = function(cb){
   //based on:  user.id + password (of the environment, that only server knows)
   var token = jwt.sign(user._id.toHexString(), process.env.SECRET)
 
-  user.token = token; //modify user, then save
+  user.token = token; //add token to user, then save
   user.save((err, user)=>{
     if (err) return cb(err);
 
-    cb(null, user) //if everything is good, new user should have the same .password as .token
+    cb(null, user)
   })
+}
+
+  //Authentication ('statics' is a custom method)
+userSchema.statics.findByToken = function(token, cb){
+  var user = this;
+
+  //decode token with jwt to get user id of user
+  jwt.verify(token, process.env.SECRET, (err, decode)=>{ //if user._id is returned, token is valid
+    user.findOne({'_id': decode, 'token': token}, (err, user)=>{
+      if(err) return cb(err);
+
+      cb(null, user);
+    })
+  })
+
 }
 
 const User = mongoose.model('User', userSchema) //creat a model from with name 'User' using userSchema

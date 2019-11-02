@@ -4,6 +4,8 @@ const express = require('express');
 const bodyParser = require('body-parser') //to send json data for requests
 const cookieParser = require('cookie-parser') //read cookies when we get requests
 
+const { auth } = require ('./middleware/auth')
+
 const app = express();
   //register middleware
 app.use(bodyParser.urlencoded({extended:true}));
@@ -17,21 +19,42 @@ require('dotenv').config() //allows us to use the .env information here on serve
 mongoose.Promise = global.Promise;
 mongoose.set('useCreateIndex', true) //so we can use 'unique' schema property
 mongoose.connect(process.env.DATABASE, { useNewUrlParser: true, useUnifiedTopology: true })
+
   //check connection
 let db = mongoose.connection
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', ()=>{console.log('...connected to Mongoose!')});
 
-
 //MODELS
 const {User}  = require('./models/user')
 
+// app.get('/', (req, res) => res.send('Hello world!'))
 
 //===============================
 //           USERS
 //===============================
 
-// app.get('/', (req, res) => res.send('Hello world!'))
+// === AUTHENTICATION ===
+  // 1) get a req from endpoint, then go to
+  // 2) auth middleware fxn, until next
+
+app.get('/api/users/auth', auth, (req, res)=>{   //cookies are inside req
+  // req now has the user data AND the token attached
+  // if allowed to proceed forward (next):
+  res.status(200).json({
+    // user: req.user,
+    isAdmin: (req.user.role ===0) ? false : true,
+    isAuth: true,
+    email: req.user.email,
+    name: req.user.name,
+    lastname: req.user.lastname,
+    role: req.user.role,
+
+    cart: req.user.cart,
+    history: req.user.history
+  })
+
+})
 
 //=== REGISTER new user ===
 app.post('/api/users/register', (req, res)=>{
@@ -43,7 +66,7 @@ app.post('/api/users/register', (req, res)=>{
 
     res.status(200).json({
       success: true,
-      userdata: doc
+      // userdata: doc
     })
   })
 })
@@ -63,21 +86,17 @@ app.post('/api/users/login', (req,res)=>{
 
       if( !isMatch ) return res.json({loginSuccess: false, message: 'Wrong password'})
 
-      //if 'isMatch' is true, generate token
-      user.generateToken((err, user)=>{
+    //if 'isMatch' is true, generate token:
+      user.generateToken((err, user)=>{  //token used in the app to see if user is registered/has access to private routes
         if (err) return res.status(400).send(err)
 
-        // if token generated, store it as a cookie
-        res.cookie('w_auth', user.token).status(200).json({ //([name of cookie], [value of cookie]) -> stores token as a cookie
+    //if token generated, store it as a cookie:
+        res.cookie('w_auth', user.token).status(200).json({ // to store: ([name of cookie], [value of cookie])
           loginSuccess: true
         })
-
       })
     })
   })
-
-
-
 
 })
 
