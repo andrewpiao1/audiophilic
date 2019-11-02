@@ -53,8 +53,21 @@ app.get('/api/users/auth', auth, (req, res)=>{   //cookies are inside req
     cart: req.user.cart,
     history: req.user.history
   })
-
 })
+
+// === LOGOUT ===
+app.get('/api/user/logout', auth, (req, res)=>{ //user can only log out if they're logged in (authenticated)
+
+  User.findOneAndUpdate({_id: req.user},
+    {token: ''}, //update
+    (err, doc) => {
+      if (err) return res.json({sucess: false, err})
+
+      return res.status(200).send({success: true}) //if token successfully removed (user logged out)
+    }
+  )
+})
+  //user 'token' property now empty str; trying to enter somewhere that needs auth will fail (will need to log in again to generate a new token)
 
 //=== REGISTER new user ===
 app.post('/api/users/register', (req, res)=>{
