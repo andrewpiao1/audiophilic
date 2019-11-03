@@ -26,9 +26,11 @@ let db = mongoose.connection
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', ()=>{console.log('...connected to Mongoose!')});
 
+
 //MODELS
 const { User}  = require('./models/user')
 const { Brand } = require('./models/brand')
+const { Type } = require('./models/type')
 
 
 
@@ -142,6 +144,29 @@ app.get('/api/product/get_brands', (req, res)=>{
     res.status(200).send(brands)
   })
 })
+
+//===============================
+//         SYSTEM TYPE
+//===============================
+
+app.post('/api/product/type', auth, admin, (req,res)=>{
+  const type = new Type(req.body)
+
+  type.save((err, doc)=>{
+    if (err) return res.json({success: false, err})
+
+    res.status(200).json({success: true, type: doc })
+  })
+})
+
+app.get('/api/product/get_types', (req, res)=>{
+  Type.find({}, (err, types)=>{
+    if (err) return res.status(400).send(err);
+
+    res.status(200).send(types)
+  })
+})
+
 
 
 const PORT = process.env.PORT || 3002;
