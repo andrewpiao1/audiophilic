@@ -26,7 +26,7 @@ const productSchema = mongoose.Schema({
     required: true,
     type: Boolean
   },
-  power_output:{
+  powerOutput:{
     required: true,
     type: Number
   },
@@ -44,20 +44,21 @@ const productSchema = mongoose.Schema({
     default: []
   },
 
-  brand: { // making a reference to the _id of the 'brand' model
+  brand: { // making a reference to the _id of the 'Brand' model
     required: true,
     type: Schema.Types.ObjectId, //telling it's a reference to an ObjectId (alias: mongoose.Schema.Types.ObjectId)
     ref: 'Brand'
   },
   type: {
     required: true,
-    type: Schema.Types.ObjectId,
-    ref: 'Type'
+    type: Schema.Types.ObjectId, //1
+    ref: 'Type' //2
+
+    //when populate(): search (2) model, for (1) ObjectId
   }
 
 }, {timestamps: true}); //to automatically generate a timestamp when product is added
 
 const Product = mongoose.model('Product', productSchema);
-
 
 module.exports = { Product }

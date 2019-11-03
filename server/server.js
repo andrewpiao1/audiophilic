@@ -29,10 +29,9 @@ db.once('open', ()=>{console.log('...connected to Mongoose!')});
 
 //MODELS
 const { User}  = require('./models/user')
-const { Brand } = require('./models/brand')
-const { Type } = require('./models/type')
-
-
+const { Brand } = require('./models/categories/brand')
+const { Type } = require('./models/categories/type')
+const { Product } = require('./models/product')
 
 
 //===============================
@@ -118,7 +117,50 @@ app.post('/api/users/login', (req,res)=>{
 
 })
 
-app.post
+//===============================
+//        * PRODUCTS *
+//===============================
+
+
+app.post('/api/product/item', auth, admin, (req, res)=>{
+  const product = new Product(req.body);
+
+  product.save((err, doc)=>{
+    if (err) return res.json({success: false, err})
+
+    res.status(200).json({
+      success: true,
+      item: doc
+    })
+  })
+
+})
+
+//2 ways of getting information from client to server:
+  //1 sending a JSON
+  //2 query string - /api/product/item?id=xxx,xxx,xxx&type=yyy (ie array or single)
+
+app.get('/api/product/items_by_id', (req, res)=>{
+  let type = req.query.type; //allowed by bodyParser.urlencoded()
+  let items = req.query.id;
+
+ // determine if multiple items by checking type
+  if (type === 'array'){
+    let ids = req.query.id.split(',');
+
+    items = []; //convert to array
+    items = ids.map( item =>{  //convert 'items' ids into ObjectIds on mongoose
+      return mongoose.Types.ObjectId(item)
+    })
+  }
+
+  Product.find({'_id':{$in:items}}) //can check whether field equals any value in an Array (or single)
+    .populate('brand') //specifying which FIELD you want to populate
+    .populate('type')
+    .exec((err, docs)=>{
+      return res.status(200).send(docs)
+    })
+})
 
 
 //===============================
