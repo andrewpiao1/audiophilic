@@ -5,6 +5,7 @@ const bodyParser = require('body-parser') //to send json data for requests
 const cookieParser = require('cookie-parser') //read cookies when we get requests
 
 const { auth } = require ('./middleware/auth')
+const { admin } = require ('./middleware/admin')
 
 const app = express();
   //register middleware
@@ -26,9 +27,11 @@ db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', ()=>{console.log('...connected to Mongoose!')});
 
 //MODELS
-const {User}  = require('./models/user')
+const { User}  = require('./models/user')
+const { Brand } = require('./models/brand')
 
-// app.get('/', (req, res) => res.send('Hello world!'))
+
+
 
 //===============================
 //           USERS
@@ -111,6 +114,33 @@ app.post('/api/users/login', (req,res)=>{
     })
   })
 
+})
+
+//===============================
+//           BRAND
+//===============================
+
+// POST a brand
+app.post('/api/product/brand', auth, admin, (req, res)=>{ //chain an additional admin middleware
+  const brand = new Brand(req.body)
+
+  brand.save((err, doc)=>{  //doc: what's returned from mongo
+    if (err) return res.json({success: false, err})
+
+    res.status(200).json({
+      success: true,
+      brand: doc
+    })
+  })
+})
+
+// GET a brand
+app.get('/api/product/get_brands', (req, res)=>{
+  Brand.find({}, (err, brands)=>{
+    if (err) return res.status(400).send(err)
+
+    res.status(200).send(brands)
+  })
 })
 
 
