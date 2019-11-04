@@ -2,7 +2,7 @@
 body {
     margin:0;
     padding:0;
-    font-family: 'Oswald', sans-serif;
+    font-family: 'Noto Sans TC', sans-serif;
     color: #404040;
 }
 
@@ -254,7 +254,7 @@ header {
 header .logo {
     font-family: 'Gruppo', cursive;
     color: #ffffff;
-    font-size: 50px;
+    font-size: 52px;
     padding: 11px 0px;
 }
 
@@ -316,16 +316,19 @@ header .log_out_link {
             FOOTER
 ==============================*/
 footer {
-    font-family: 'Gruppo', cursive;
+    font-family: 'Noto Sans TC', sans-serif;
+    font-weight: 100;
 }
 
 footer .logo {
     text-align: center;
     font-family: 'Gruppo', cursive;
     color: #ffffff;
-    font-size: 40px;
+    font-size: 42px;
     padding: 11px 0px;
     border-bottom: 1px solid #4d4d4d;
+
+    transform: scale(0.95,1);
 }
 
 footer .wrapper {
@@ -339,8 +342,9 @@ footer .right {
 }
 
 footer h3 {
-    font-size: 25px;
-    margin-bottom: 15px;
+    font-size: 20px;
+    font-weight: normal;
+    margin-bottom: 12px;
 }
 
 footer .business_info {
@@ -358,13 +362,14 @@ footer .business_info .tag {
 }
 footer .business_info .icon {
     position: absolute;
-    font-size: 25px;
+    font-size: 23px;
     top: 5px;
 }
 footer .business_info .info {
     padding-left: 25px;
+    font-size: 16px;
+
     transform: scale(0.9,1);
-    font-size: 20px;
 }
 
 
@@ -438,7 +443,7 @@ footer .business_info .info {
     margin: 0 auto;
 }
 
-.home_promotion .my_link a {
+.home_promotion .my-button a {
     margin: 10px auto;
 }
 

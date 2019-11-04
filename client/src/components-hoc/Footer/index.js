@@ -16,7 +16,7 @@ class Footer extends Component {
           <div className="wrapper">
 
             <div className="left">
-                <h3>Contact Information</h3>
+                <h3>Contact Information -╾</h3>
               <div className="business_info">
 
                 {/* --- Address --- */}
@@ -60,11 +60,14 @@ class Footer extends Component {
                     </div>
                 </div>
 
-
               </div>
             </div>
 
-            <div className="right">
+            <div className="left">
+              <h3>Be the first to know -╾</h3>
+              <div className="info">
+                Get all the latest information on new releases, sales, and offers. You cannot miss out!
+              </div>
 
             </div>
 

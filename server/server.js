@@ -44,7 +44,7 @@ const { Product } = require('./models/product')
 
 app.get('/api/users/auth', auth, (req, res)=>{   //cookies are inside req
   // req now has the user data AND the token attached
-  // if allowed to proceed forward (next):
+  // auth: if allowed to proceed forward (next):
   res.status(200).json({
     // user: req.user,
     isAdmin: (req.user.role ===0) ? false : true,

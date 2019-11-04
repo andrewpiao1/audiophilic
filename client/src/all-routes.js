@@ -3,7 +3,7 @@ import {Switch, Route } from 'react-router-dom';
 
 import Layout from './components-hoc/layout'
 import Home from './components/Home'
-
+import RegisterLogin from './components/Register-Login'
 
 //stateless component
 const Routes = () => {
@@ -11,6 +11,7 @@ const Routes = () => {
     <Layout>
       <Switch>
         <Route path="/" exact component={Home}/>
+        <Route path="/register_login" exact component={RegisterLogin}/>
       </Switch>
     </Layout>
 
