@@ -11,7 +11,7 @@ class Footer extends Component {
       <footer className="background_dark">
         <div className="container">
           <div className="logo">
-            AudioPhilic
+          ‐&nbsp;AudioPhilic ‐╾
           </div>
           <div className="wrapper">
 

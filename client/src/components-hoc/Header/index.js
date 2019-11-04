@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+// import apLogo from '../../resources/ap-logo.png';
 
 class Header extends Component {
   render() {
@@ -8,16 +9,16 @@ class Header extends Component {
 
           <div className="left">
             <div className="logo">
-              AudioPhilic
+            ⧨AudioPhilic
             </div>
           </div>
 
           <div className="right">
             <div className="top">
-              LINKS
+            ☰ Links
             </div>
             <div className="bottom">
-              LINKS
+            ☰ Links
             </div>
           </div>
 

@@ -255,7 +255,7 @@ header .logo {
     font-family: 'Gruppo', cursive;
     color: #ffffff;
     font-size: 50px;
-    padding: 11px 20px;
+    padding: 11px 0px;
 }
 
 header a {
@@ -316,7 +316,7 @@ header .log_out_link {
             FOOTER
 ==============================*/
 footer {
-    font-family: 'Lucida Sans', Arial, sans-serif;
+    font-family: 'Gruppo', cursive;
 }
 
 footer .logo {
@@ -338,9 +338,15 @@ footer .right {
     flex: 1;
 }
 
+footer h3 {
+    font-size: 25px;
+    margin-bottom: 15px;
+}
+
 footer .business_info {
     display: flex;
     flex-wrap: wrap;
+    margin-left: 10px;
 }
 
 footer .business_info .tag {
@@ -348,14 +354,17 @@ footer .business_info .tag {
     position: relative;
     width: 50%;
     margin-bottom: 30px;
+    margin-left: 0px;
 }
 footer .business_info .icon {
     position: absolute;
-    font-size: 26px;
-    top: 10px;
+    font-size: 25px;
+    top: 5px;
 }
 footer .business_info .info {
-    padding-left: 40px;
+    padding-left: 25px;
+    transform: scale(0.9,1);
+    font-size: 20px;
 }
 
 
