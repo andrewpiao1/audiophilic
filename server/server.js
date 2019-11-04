@@ -136,6 +136,7 @@ app.post('/api/product/item', auth, admin, (req, res)=>{
 
 })
 
+
 //2 ways of getting information from client to server:
   //1 sending a JSON
   //2 query string - /api/product/item?id=xxx,xxx,xxx&type=yyy (ie array or single)
@@ -158,9 +159,36 @@ app.get('/api/product/items_by_id', (req, res)=>{
     .populate('brand') //specifying which FIELD you want to populate
     .populate('type')
     .exec((err, docs)=>{
-      return res.status(200).send(docs)
+      if (err) return res.status(400).send(err);
+
+      res.send(docs)
     })
 })
+
+// BY SELL  - /items?sortedBy=sold&order=desc&limit=4
+
+// BY ARRIVAL - /items?sortBy=createdAt&order=desc&limit=4
+
+app.get('/api/product/items', (req,res)=>{
+  let order = req.query.order || 'asc'; //if we don't have 'order' set 'asc' as default
+  let sortBy = req.query.sortBy || '_id';
+  let limit = req.query.limit ? parseInt(req.query.limit) : 100; //num, not str
+
+  Product.find({})
+    .populate('brand')
+    .populate('type')
+    .sort([[sortBy, order]])
+    .limit(limit)
+    .exec((err, docs)=>{
+      if (err) return res.status(400).send(err);
+
+      res.send(docs)
+    })
+})
+
+
+
+
 
 
 //===============================
@@ -184,7 +212,7 @@ app.post('/api/product/brand', auth, admin, (req, res)=>{ //chain an additional 
 // GET a brand
 app.get('/api/product/get_brands', (req, res)=>{
   Brand.find({}, (err, brands)=>{
-    if (err) return res.status(400).send(err)
+    if (err) return res.status(400).send(err);
 
     res.status(200).send(brands)
   })
