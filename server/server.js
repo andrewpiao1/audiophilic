@@ -206,7 +206,7 @@ app.post('/api/product/brand', auth, admin, (req, res)=>{ //chain an additional 
 })
 
 // GET a brand
-app.get('/api/product/get_brands', (req, res)=>{
+app.get('/api/product/brands', (req, res)=>{
   Brand.find({}, (err, brands)=>{
     if (err) return res.status(400).send(err);
 
@@ -228,7 +228,7 @@ app.post('/api/product/type', auth, admin, (req,res)=>{
   })
 })
 
-app.get('/api/product/get_types', (req, res)=>{
+app.get('/api/product/types', (req, res)=>{
   Type.find({}, (err, types)=>{
     if (err) return res.status(400).send(err);
 
