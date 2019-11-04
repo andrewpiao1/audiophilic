@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Header from './Header';
+import Footer from './Footer'
 
 //header
 //middle
@@ -11,10 +12,12 @@ class Layout extends Component {
 
       <div>
         <Header />
+
         <div className="page_container">
           {this.props.children}
         </div>
-        FOOTER
+
+        <Footer />
       </div>
 
     );

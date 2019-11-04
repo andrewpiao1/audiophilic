@@ -28,11 +28,11 @@ a {
     color:inherit;
 }
 
-.bck_b_light {
+.background_light {
     background: #999592;
 }
 
-.bck_b_dark {
+.background_dark {
     background: #272723;
 }
 
@@ -315,12 +315,13 @@ header .log_out_link {
 /*============================
             FOOTER
 ==============================*/
-
-
+footer {
+    font-family: 'Lucida Sans', Arial, sans-serif;
+}
 
 footer .logo {
     text-align: center;
-    font-family: 'Monoton', cursive;
+    font-family: 'Gruppo', cursive;
     color: #ffffff;
     font-size: 40px;
     padding: 11px 0px;
@@ -337,23 +338,23 @@ footer .right {
     flex: 1;
 }
 
-footer .business_nfo {
+footer .business_info {
     display: flex;
     flex-wrap: wrap;
 }
 
-footer .business_nfo .tag {
+footer .business_info .tag {
     flex-grow: 1;
     position: relative;
     width: 50%;
     margin-bottom: 30px;
 }
-footer .business_nfo .icon {
+footer .business_info .icon {
     position: absolute;
     font-size: 26px;
     top: 10px;
 }
-footer .business_nfo .nfo {
+footer .business_info .info {
     padding-left: 40px;
 }
 
