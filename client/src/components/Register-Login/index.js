@@ -1,6 +1,7 @@
 import React from 'react';
-import MyButton from '../utils/button';
+import MyButton from '../utils/my-button';
 
+import Login from './Login';
 
 //stateless component (b/c not too much logic)
 
@@ -28,7 +29,10 @@ const RegisterLogin = () => {
           <div className="right">
             <h2>Registered customers</h2>
             <p>If you have an account, please log in.</p>
-            LOGIN
+
+            <Login />
+
+            {/* <Login /> */}
           </div>
         </div>
 

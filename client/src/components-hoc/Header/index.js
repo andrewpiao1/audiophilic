@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 // import apLogo from '../../resources/ap-logo.png';
+// 1[❯] 2[❭❭] 3[❩] 4[⧩]
+
 
 class Header extends Component {
   render() {
@@ -9,7 +11,7 @@ class Header extends Component {
 
           <div className="left">
             <div className="logo">
-            ⧨AudioPhilic
+            &nbsp; ❩AudioPhilic
             </div>
           </div>
 

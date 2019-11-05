@@ -5,11 +5,11 @@ import { Link } from 'react-router-dom';
 const MyButton = (props) => {
 
   const buttons = () => {  //checks the 'type' and returns the appropriate jsx
-    let template = '';
+    let buttonTemplate = '';
 
     switch(props.type){
       case "link":
-        template =
+        buttonTemplate =
           <Link className="link_default"
             to={props.linkTo}
             {...props.addStyles}>
@@ -19,10 +19,10 @@ const MyButton = (props) => {
           break;
 
       default:
-        template = '';
+        buttonTemplate = '';
     }
 
-    return template
+    return buttonTemplate
   }
 
   return (
