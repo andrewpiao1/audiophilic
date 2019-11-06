@@ -53,18 +53,15 @@ const validate = ( element, formData = [] ) =>{ //will return an array: boolean 
 
 const generateData = (formData, formName) => {
   let dataToSubmit = {}
-
   for (let key in formData){
     dataToSubmit[key] = formData[key].value
     }
 
     return dataToSubmit;
-
 }
 
 const isFormValid = (formData, formName) => {
   let formIsValid = true
-
   for (let key in formData){
     formIsValid = formData[key].valid && formIsValid
   }

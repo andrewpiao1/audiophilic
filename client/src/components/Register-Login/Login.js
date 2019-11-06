@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import FormField from '../utils/form-field';
 import { update, generateData, isFormValid } from '../utils/form-actions';
+import {loginUser} from '../../redux/actions/user-actions'
 
 // import { connect } from 'react-redux'
 //after we login, we need to check server for authentication (Redux)
@@ -69,7 +70,8 @@ class Login extends Component {
     let formIsValid = isFormValid(this.state.formData, 'login')
 
     if (formIsValid){
-      console.log('data: ', dataToSubmit)
+      console.log('dataToSubmit: ', dataToSubmit)  //*where we dispatch an action to Redux -> server -> response
+      loginUser(dataToSubmit)
     }else{
       this.setState({
         formError: true //(Please check your information...)
