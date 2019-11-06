@@ -24,7 +24,7 @@ const update = (element, formData, formName) => {
 
   newElement.touched = element.blur || false;
   newFormData[element.id] = newElement
-  console.log('new: ', newFormData)
+// console.log('new: ', newFormData)
 
   return newFormData  //will contain all the changes: value, valid, validation message, touched
 
@@ -49,4 +49,27 @@ const validate = ( element, formData = [] ) =>{ //will return an array: boolean 
 
 }
 
-export {update}
+// === UPON SUBMISSION ===
+
+const generateData = (formData, formName) => {
+  let dataToSubmit = {}
+
+  for (let key in formData){
+    dataToSubmit[key] = formData[key].value
+    }
+
+    return dataToSubmit;
+
+}
+
+const isFormValid = (formData, formName) => {
+  let formIsValid = true
+
+  for (let key in formData){
+    formIsValid = formData[key].valid && formIsValid
+  }
+
+  return formIsValid;
+}
+
+export {update, generateData, isFormValid}

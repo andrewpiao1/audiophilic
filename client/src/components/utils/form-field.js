@@ -45,7 +45,6 @@ const FormField = ({id, formData, change}) => {
 
   }
 
-
   return (
     <div>
       {renderTemplate()}

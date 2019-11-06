@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import FormField from '../utils/form-field';
-import { update } from '../utils/form-actions';
+import { update, generateData, isFormValid } from '../utils/form-actions';
 
 // import { connect } from 'react-redux'
 //after we login, we need to check server for authentication (Redux)
@@ -11,8 +11,8 @@ class Login extends Component {
     formError: false,
     formSuccess: '',
 
-    //need to create a reusable component that will take in 'formData'
-    //component will take info and create an input w/ everything we need
+    //need to create a reusable component (form-field) that will take in 'formData'
+    //this component will take in info and create an input w/ everything we need
 
     formData: {   //where we store all the elements (inputs) of the form
 
@@ -62,14 +62,24 @@ class Login extends Component {
     })
   }
 
-  submitForm = () => {
+  submitForm = (event) => {
+    event.preventDefault();
+
+    let dataToSubmit = generateData(this.state.formData, 'login');
+    let formIsValid = isFormValid(this.state.formData, 'login')
+
+    if (formIsValid){
+      console.log('data: ', dataToSubmit)
+    }else{
+      this.setState({
+        formError: true //(Please check your information...)
+      })
+    }
+
 
   }
 
-  // formfield will be passed the form data (as props) ->
-  // run through the checks ->
-  // return input w/ all the information
-
+  // formfield will be passed the form data (as props)
   render() {
     return (
       <div className="signin_wrapper">
@@ -88,6 +98,9 @@ class Login extends Component {
               change={ (element)=> this.updateForm(element)} //element contains the event, id ('email'), blur
             />
 
+            {this.state.formError ? <div className="error_label"> Please check your imformation... </div> :null}
+
+            <button onClick={(event)=> this.submitForm(event)}>Log in</button>
 
 
         </form>
