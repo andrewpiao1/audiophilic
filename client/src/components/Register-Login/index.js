@@ -32,7 +32,6 @@ const RegisterLogin = () => {
 
             <Login />
 
-            {/* <Login /> */}
           </div>
         </div>
 

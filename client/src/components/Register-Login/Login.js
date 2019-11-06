@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import FormField from '../utils/form-field';
 import { update, generateData, isFormValid } from '../utils/form-actions';
 import {loginUser} from '../../redux/actions/user-actions'
+import {withRouter} from 'react-router-dom'
 
-// import { connect } from 'react-redux'
+import { connect } from 'react-redux'
 //after we login, we need to check server for authentication (Redux)
 
 class Login extends Component {
@@ -71,14 +72,24 @@ class Login extends Component {
 
     if (formIsValid){
       // console.log('dataToSubmit: ', dataToSubmit)
-      loginUser(dataToSubmit)  //*where we dispatch an action to Redux ACTIONS -> server -> response
+
+      this.props.dispatch(loginUser(dataToSubmit)) //*where we dispatch an action to Redux ACTIONS (check dev tools) -> server -> response
+      .then(res => { //will return the obj defined by ACTION: type & payload ({loginSuccess: true})
+        if (res.payload.loginSuccess){
+          this.props.history.push('/user/dashboard') // how we send to new route user user react router; will first need to inject properties of the route (since this is a child of multiple layers before routes) -> withRouter
+
+        }else{
+          this.setState({
+            formError: true
+          })
+        }
+      })
+
     }else{
       this.setState({
         formError: true //(Please check your information...)
       })
     }
-
-
   }
 
   // formfield will be passed the form data (as props)
@@ -111,6 +122,6 @@ class Login extends Component {
   }
 }
 
-export default Login;
+// export default Login;
 
-// export default connect()(Login);
+export default connect()(withRouter(Login)); //so now all route props will be injected in Login

@@ -52,7 +52,6 @@ const userSchema = mongoose.Schema({
 
 userSchema.pre('save', function(next){   //next for when you're finished and want to complete the rest of the process
   var user = this; //ES5 requires we create an alias for 'this'
-  console.log("PRE-THIS", this)
 
   if (user.isModified('password')){ //only hash when we are saving a new user or modifying password (we do not want to re-hash password for say ex, name change)
 
