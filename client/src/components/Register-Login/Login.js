@@ -44,13 +44,13 @@ class Login extends Component {
           placeholder: 'Enter your password',
           autoComplete: 'on'
         },
-        validation: { //will start when information is entered in -> modifies 'valid'
+        validation: {
           required: true,
-          // email: true (not an email)
+
         },
         valid: false,
-        touched: false, //for validation skipping
-        validationMessage: '' //if err, stored here
+        touched: false,
+        validationMessage: ''
       }
     }
   }
@@ -73,18 +73,17 @@ class Login extends Component {
     if (formIsValid){
       // console.log('dataToSubmit: ', dataToSubmit)
 
-      this.props.dispatch(loginUser(dataToSubmit)) //*where we dispatch an action to Redux ACTIONS (check dev tools) -> server -> response
+      //*where we dispatch an action to Redux ACTIONS (check dev tools) -> server -> response
+      this.props.dispatch(loginUser(dataToSubmit))
       .then(res => { //will return the obj defined by ACTION: type & payload ({loginSuccess: true})
         if (res.payload.loginSuccess){
           this.props.history.push('/user/dashboard') // how we send to new route user user react router; will first need to inject properties of the route (since this is a child of multiple layers before routes) -> withRouter
-
         }else{
           this.setState({
             formError: true
           })
         }
       })
-
     }else{
       this.setState({
         formError: true //(Please check your information...)
