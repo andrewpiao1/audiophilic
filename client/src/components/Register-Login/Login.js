@@ -70,8 +70,8 @@ class Login extends Component {
     let formIsValid = isFormValid(this.state.formData, 'login')
 
     if (formIsValid){
-      console.log('dataToSubmit: ', dataToSubmit)  //*where we dispatch an action to Redux -> server -> response
-      loginUser(dataToSubmit)
+      // console.log('dataToSubmit: ', dataToSubmit)
+      loginUser(dataToSubmit)  //*where we dispatch an action to Redux ACTIONS -> server -> response
     }else{
       this.setState({
         formError: true //(Please check your information...)

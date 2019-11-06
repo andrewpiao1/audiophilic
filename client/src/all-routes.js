@@ -15,8 +15,6 @@ const Routes = () => {
       </Switch>
     </Layout>
 
-
-
   )
 }
 
