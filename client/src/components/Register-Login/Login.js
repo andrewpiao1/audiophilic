@@ -71,11 +71,12 @@ class Login extends Component {
     let formIsValid = isFormValid(this.state.formData, 'login')
 
     if (formIsValid){
-      // console.log('dataToSubmit: ', dataToSubmit)
+      console.log('dataToSubmit: ', dataToSubmit)
 
       //*where we dispatch an action to Redux ACTIONS (check dev tools) -> server -> response
       this.props.dispatch(loginUser(dataToSubmit))
-      .then(res => { //will return the obj defined by ACTION: type & payload ({loginSuccess: true})
+      .then(res => { //will return the obj defined by ACTION: type & payload ({loginSuccess: true}
+
         if (res.payload.loginSuccess){
           this.props.history.push('/user/dashboard') // how we send to new route user user react router; will first need to inject properties of the route (since this is a child of multiple layers before routes) -> withRouter
         }else{

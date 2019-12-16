@@ -3,7 +3,7 @@ import Header from './Header';
 import Footer from './Footer'
 
 //header
-//middle
+//content
 //fooder
 
 class Layout extends Component {

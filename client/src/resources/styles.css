@@ -29,7 +29,7 @@ a {
 }
 
 .background_light {
-    background: #999592;
+    background: #555453;
 }
 
 .background_dark {
@@ -109,11 +109,11 @@ input {
 
 button {
     cursor: pointer;
-    text-transform: uppercase;
-    padding: 10px;
-    background: #e1ddc3;
+    /* text-transform: uppercase; */
+    padding: 8px;
+    background: #e7e7e7;
     margin-top: 10px;
-    font-family: 'Oswald', sans-serif;
+    font-family: 'Noto Sans TC', sans-serif;
     font-size: 16px;
 }
 
@@ -184,10 +184,10 @@ select {
             BUTTONS
 ==============================*/
 .link_default {
-    text-transform: uppercase;
-    padding: 10px;
+    /* text-transform: uppercase; */
+    padding: 8px;
     display: table;
-    background: #e1ddc3;
+    background: #e7e7e7;
     margin-top: 10px;
 }
 

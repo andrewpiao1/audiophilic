@@ -9,9 +9,8 @@ const UserDashboard = () => {
          <div className="user_nfo_panel">
            <h1>User information</h1>
            <div>
-             <span>name</span>
-             <span>lastname</span>
-             <span>email</span>
+             <span>Name: Andy Piao</span>
+             <span>Email: andy@gmail.com</span>
            </div>
 
 

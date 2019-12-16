@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import FormField from '../utils/form-field';
 import { update, generateData, isFormValid } from '../utils/form-actions';
-import {withRouter} from 'react-router-dom'
+// import {withRouter} from 'react-router-dom'
 
-import {loginUser} from '../../redux/actions/user-actions'
+// import {loginUser} from '../../redux/actions/user-actions'
 
 import { connect } from 'react-redux'
 
