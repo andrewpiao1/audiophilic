@@ -19,7 +19,7 @@
     "concurrently": "^3.6.1",
     "cookie-parser": "^1.4.4",
     "dotenv": "^6.2.0",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "express-formidable": "^1.2.0",
     "hoist-non-react-statics": "^3.3.0",
     "jsonwebtoken": "^8.5.1",
